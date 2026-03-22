@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instituto Urbano Rocha — U.T.I. da Música</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Josefin+Sans:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal-deep:  #2d7a6e;
+  --teal-mid:   #3d9b8c;
+  --teal-light: #6bbfb0;
+  --teal-pale:  #c8e8e3;
+  --teal-bg:    #edf7f5;
+  --green-text: #2a5c52;
+  --white:      #ffffff;
+  --off-white:  #f5fafa;
+  --grey-light: #e4eeed;
+  --grey-mid:   #8aaba6;
+  --text-main:  #1e3d39;
+  --text-muted: #5a7e79;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Lora',Georgia,serif;background:var(--off-white);color:var(--text-main);min-height:100vh}
+
+/* HEADER */
+header{background:var(--white);border-bottom:1px solid var(--grey-light);padding:0 clamp(20px,5vw,80px);display:flex;align-items:center;gap:20px;height:70px;position:sticky;top:0;z-index:100;box-shadow:0 1px 12px rgba(45,122,110,.07)}
+.logo-wrap{display:flex;align-items:center;gap:13px;text-decoration:none;flex-shrink:0}
+.logo-svg{width:40px;height:40px;flex-shrink:0}
+.logo-text{display:flex;flex-direction:column;line-height:1.2}
+.logo-text .inst{font-family:'Josefin Sans',sans-serif;font-size:9px;font-weight:300;letter-spacing:.22em;text-transform:uppercase;color:var(--teal-mid)}
+.logo-text .name{font-family:'Josefin Sans',sans-serif;font-size:14px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--green-text)}
+.logo-text .uti{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal-light);font-weight:300}
+.header-spacer{flex:1}
+.header-tag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey-mid);display:none}
+@media(min-width:600px){.header-tag{display:block}}
+
+/* HERO */
+.hero-strip{background:linear-gradient(135deg,var(--teal-deep) 0%,var(--teal-mid) 55%,#5ab5a6 100%);padding:clamp(36px,6vw,72px) clamp(20px,5vw,80px);position:relative;overflow:hidden}
+.hero-strip::before{content:'';position:absolute;right:-60px;top:-60px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.05)}
+.hero-inner{position:relative;z-index:2;max-width:680px}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal-pale);opacity:.8;margin-bottom:14px}
+.hero-strip h1{font-family:'Lora',serif;font-weight:400;font-size:clamp(24px,4vw,44px);color:#fff;line-height:1.3;margin-bottom:14px}
+.hero-strip h1 em{font-style:italic;color:var(--teal-pale)}
+.hero-sub{font-size:14px;line-height:1.75;color:rgba(255,255,255,.7);max-width:500px}
+
+/* TABS */
+.tabs-container{max-width:960px;margin:0 auto;padding:0 clamp(16px,4vw,48px)}
+.tab-nav{display:flex;gap:0;border-bottom:2px solid var(--grey-light);margin-top:32px;overflow-x:auto;scrollbar-width:none}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{font-family:'Josefin Sans',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--grey-mid);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;padding:15px 22px;cursor:pointer;white-space:nowrap;transition:color .22s,border-color .22s;display:flex;align-items:center;gap:7px}
+.tab-btn .ti{font-size:13px}
+.tab-btn:hover{color:var(--teal-mid)}
+.tab-btn.active{color:var(--teal-deep);border-bottom-color:var(--teal-deep)}
+.tab-panel{display:none;padding:36px 0 60px}
+.tab-panel.active{display:block;animation:fadeIn .28s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+
+/* MOMENT */
+.moment-section{margin-bottom:36px}
+.moment-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.moment-icon{width:36px;height:36px;border-radius:50%;background:var(--teal-bg);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;border:1px solid var(--teal-pale)}
+.moment-header h3{font-family:'Josefin Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-deep)}
+
+/* PIECE TABLE */
+.pieces-list{list-style:none;border:1px solid var(--grey-light);border-radius:8px;overflow:hidden;background:var(--white)}
+.piece-item{display:grid;grid-template-columns:1fr auto auto;align-items:center;padding:14px 20px;border-bottom:1px solid var(--grey-light);transition:background .18s;gap:12px}
+.piece-item:last-child{border-bottom:none}
+.piece-item:hover{background:var(--teal-bg)}
+.piece-name{font-size:14.5px;font-weight:500;color:var(--text-main)}
+.piece-composer{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--text-muted);margin-top:2px}
+.piece-tag{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;background:var(--teal-bg);color:var(--teal-deep);border:1px solid var(--teal-pale);border-radius:4px;padding:3px 9px;white-space:nowrap}
+.piece-links{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.plink{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);text-decoration:none;border:1px solid var(--teal-pale);border-radius:4px;padding:3px 8px;background:var(--white);transition:background .18s,border-color .18s;white-space:nowrap}
+.plink:hover{background:var(--teal-pale);border-color:var(--teal-mid)}
+
+/* LEVEL */
+.level-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:540px){.level-grid{grid-template-columns:1fr}}
+.level-card{background:var(--white);border:1px solid var(--grey-light);border-radius:8px;padding:26px 22px}
+.level-badge{display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal-deep);background:var(--teal-bg);border-radius:4px;padding:5px 11px;margin-bottom:18px}
+.level-card ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.level-card ul li{font-size:13.5px;color:var(--text-muted);padding-left:17px;position:relative;line-height:1.5}
+.level-card ul li::before{content:'♩';position:absolute;left:0;color:var(--teal-light);font-size:10px}
+.level-card ul li strong{color:var(--text-main);font-weight:500}
+.level-card ul li .li-links{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap}
+
+/* CIVICO */
+.civico-card{background:var(--white);border:1px solid var(--grey-light);border-radius:8px;overflow:hidden;margin-bottom:28px}
+.civico-item{display:grid;grid-template-columns:1fr auto;align-items:start;padding:15px 22px;border-bottom:1px solid var(--grey-light);transition:background .18s;gap:12px}
+.civico-item:last-child{border-bottom:none}
+.civico-item:hover{background:var(--teal-bg)}
+.civico-left strong{display:block;font-size:14.5px;font-weight:500;color:var(--text-main)}
+.civico-left span{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--text-muted)}
+.civico-left .ci-links{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap}
+.civico-badge{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--teal-pale);color:var(--teal-deep);border-radius:4px;padding:4px 10px;white-space:nowrap;flex-shrink:0;background:var(--teal-bg)}
+
+.info-box{background:var(--teal-bg);border:1px solid var(--teal-pale);border-radius:8px;padding:20px 22px;margin-bottom:24px}
+.info-box p{font-size:13.5px;line-height:1.7;color:var(--teal-deep)}
+.info-box p+p{margin-top:8px}
+
+.arr-label{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey-mid);margin-bottom:12px}
+.pills-wrap{display:flex;flex-wrap:wrap;gap:9px}
+.pill{font-size:13.5px;font-style:italic;border:1px solid var(--grey-light);border-radius:20px;padding:6px 17px;color:var(--text-muted);background:var(--white);transition:border-color .2s,color .2s}
+.pill:hover{border-color:var(--teal-light);color:var(--teal-deep)}
+
+/* RECURSOS */
+.recursos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:13px}
+.recurso-card{background:var(--white);border:1px solid var(--grey-light);border-radius:8px;padding:24px 22px;transition:border-color .22s,box-shadow .22s}
+.recurso-card:hover{border-color:var(--teal-light);box-shadow:0 4px 16px rgba(61,155,140,.1)}
+.recurso-icon{width:34px;height:34px;border-radius:8px;background:var(--teal-bg);display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:14px;border:1px solid var(--teal-pale)}
+.recurso-card h4{font-family:'Josefin Sans',sans-serif;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:7px}
+.recurso-card p{font-size:13px;line-height:1.65;color:var(--text-muted);margin-bottom:16px}
+.recurso-link{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-deep);text-decoration:none;display:inline-flex;align-items:center;gap:5px;border-bottom:1px solid var(--teal-pale);padding-bottom:2px;transition:border-color .2s}
+.recurso-link:hover{border-color:var(--teal-deep)}
+
+.dica-box{background:var(--teal-bg);border:1px solid var(--teal-pale);border-radius:8px;padding:20px 22px;margin-top:22px}
+.dica-box h4{font-family:'Josefin Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:10px}
+.dica-box ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.dica-box ul li{font-size:13px;color:var(--teal-deep);padding-left:17px;position:relative;opacity:.85}
+.dica-box ul li::before{content:'→';position:absolute;left:0;color:var(--teal-light)}
+
+.section-intro{font-size:13.5px;line-height:1.8;color:var(--text-muted);max-width:580px;margin-bottom:28px}
+
+/* FOOTER */
+footer{background:var(--teal-deep);color:rgba(255,255,255,.55);text-align:center;padding:28px 24px;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase}
+footer span{color:rgba(255,255,255,.85)}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo-wrap" href="#">
+    <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="g1" cx="38%" cy="32%" r="65%">
+          <stop offset="0%" stop-color="#7dcfc2"/>
+          <stop offset="55%" stop-color="#3d9b8c"/>
+          <stop offset="100%" stop-color="#2a6e63"/>
+        </radialGradient>
+        <clipPath id="sc"><circle cx="50" cy="53" r="40"/></clipPath>
+      </defs>
+      <circle cx="50" cy="53" r="40" fill="url(#g1)"/>
+      <g clip-path="url(#sc)" opacity="0.38">
+        <path d="M16 43 Q34 34 50 43 Q66 52 84 43" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"/>
+        <path d="M16 52 Q34 43 50 52 Q66 61 84 52" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"/>
+        <path d="M16 61 Q34 52 50 61 Q66 70 84 61" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"/>
+      </g>
+      <circle cx="44" cy="69" r="7.5" fill="white"/>
+      <rect x="51" y="32" width="4.5" height="37" rx="2.2" fill="white"/>
+      <ellipse cx="57" cy="34" rx="11" ry="5" fill="white" transform="rotate(-14 57 34)"/>
+    </svg>
+    <div class="logo-text">
+      <span class="inst">Instituto</span>
+      <span class="name">Urbano Rocha</span>
+      <span class="uti">U.T.I. da Música</span>
+    </div>
+  </a>
+  <div class="header-spacer"></div>
+  <span class="header-tag">Violão Clássico · Cerimônias</span>
+</header>
+
+<div class="hero-strip">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Repertório para violão clássico</div>
+    <h1>Música elegante para<br><em>cada momento da cerimônia.</em></h1>
+    <p class="hero-sub">Casamentos, formaturas, bodas, batizados e solenidades cívicas — peças criteriosamente selecionadas com partituras e tutoriais para cada obra.</p>
+  </div>
+</div>
+
+<div class="tabs-container">
+
+  <nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" onclick="switchTab('casamento')" role="tab"><span class="ti">💍</span> Casamentos</button>
+    <button class="tab-btn" onclick="switchTab('civico')" role="tab"><span class="ti">🏛️</span> Cívico / Formatura</button>
+    <button class="tab-btn" onclick="switchTab('nivel')" role="tab"><span class="ti">♩</span> Por Nível</button>
+    <button class="tab-btn" onclick="switchTab('recursos')" role="tab"><span class="ti">🎼</span> Partituras</button>
+  </nav>
+
+  <!-- ═══ ABA 1: CASAMENTO ═══ -->
+  <div class="tab-panel active" id="tab-casamento">
+    <p class="section-intro">Peças elegantes e emotivas organizadas por momento da cerimônia. Cada obra tem links diretos para partitura ou tutorial.</p>
+
+    <!-- Entrada -->
+    <div class="moment-section">
+      <div class="moment-header">
+        <div class="moment-icon">🚶</div>
+        <h3>Entrada da Noiva / Marcha Nupcial</h3>
+      </div>
+      <ul class="pieces-list">
+
+        <li class="piece-item">
+          <div>
+            <div class="piece-name">Wedding March (Marcha Nupcial)</div>
+            <div class="piece-composer">Felix Mendelssohn — clássico absoluto de casamento</div>
+          </div>
+          <span class="piece-tag">Entrada</span>
+          <div class="piece-links">
+            <a class="plink" href="https://imslp.org/wiki/A_Midsummer_Night%27s_Dream,_Op.61_(Mendelssohn,_Felix)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=wedding+march+mendelssohn+guitar" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+
+        <li class="piece-item">
+          <div>
+            <div class="piece-name">Canon in D</div>
+            <div class="piece-composer">Johann Pachelbel — a mais tocada em entradas, muito versátil</div>
+          </div>
+          <span class="piece-tag">Entrada</span>
+          <div class="piece-links">
+            <a class="plink" href="https://imslp.org/wiki/Canon_and_Gigue_in_D_major_(Pachelbel,_Johann)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=canon+in+d+pachelbel+guitar" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+
+        <li class="piece-item">
+          <div>
+            <div class="piece-name">Bridal Chorus — Here Comes the Bride</div>
+            <div class="piece-composer">Richard Wagner — versão simplificada funciona perfeitamente</div>
+          </div>
+          <span class="piece-tag">Entrada</span>
+          <div class="piece-links">
+            <a class="plink" href="https://imslp.org/wiki/Lohengrin_(Wagner,_Richard)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=bridal+chorus+wagner+guitar" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+
+    <!-- Durante -->
+    <div class="moment-section">
+      <div class="moment-header">
+        <div class="moment-icon">✍️</div>
+        <h3>Durante a Cerimônia · Assinatura · Ofertório</h3>
+      </div>
+      <ul class="pieces-list">
+
+        <li class="piece-item">
+          <div>
+            <div class="piece-name">Ave Maria</div>
+            <div class="piece-composer">Franz Schubert · versão Bach/Gounod — extremamente emotiva</div>
+          </div>
+          <span class="piece-tag">Religioso</span>
+          <div class="piece-links">
+            <a class="plink" href="https://imslp.org/wiki/Ave_Maria,_D.839_(Schubert,_Franz)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=ave+maria+schubert+violao" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+
+        <li class="piece-item">
+          <div>
+            <div class="piece-name">Jesu, Joy of Man's Desiring</div>
+            <div class="piece-composer">J.S. Bach — das mais bonitas e serenas para violão clássico</div>
+          </div>
+          <span class="piece-tag">Serena</span>
+          <div class="piece-links">
+            <a class="plink" href="https://imslp.org/wiki/Herz_und_Mund_und_Tat_und_Leben,_BWV_147_(Bach,_Johann_Sebastian)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=jesu+joy+bach+guitar" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+
+        <li class="piece-item">
+          <div>
+            <div class="piece-name">Air on the G String</div>
+            <div class="piece-composer">J.S. Bach — suave, elegante e muito usada em casamentos</div>
+          </div>
+          <span class="piece-tag">Elegante</span>
+          <div class="piece-links">
+            <a class="plink" href="https://imslp.org/wiki/Orchestral_Suite_No.3_in_D_major,_BWV_1068_(Bach,_Johann_Sebastian)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=air+g+string+bach+guitar" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+
+        <li class="piece-item">
+          <div>
+            <div class="piece-name">Largo — de Xerxes</div>
+            <div class="piece-composer">G.F. Handel — calma e majestosa</div>
+          </div>
+          <span class="piece-tag">Solene</span>
+          <div class="piece-links">
+            <a class="plink" href="https://imslp.org/wiki/Serse,_HWV_40_(Handel,_George_Frideric)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=handel+largo+xerxes+guitar" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+
+    <!-- Saída -->
+    <div class="moment-section">
+      <div class="moment-header">
+        <div class="moment-icon">🎊</div>
+        <h3>Saída dos Noivos / Marcha Triunfal</h3>
+      </div>
+      <ul class="pieces-list">
+
+        <li class="piece-item">
+          <div>
+            <div class="piece-name">Wedding March (saída)</div>
+            <div class="piece-composer">Felix Mendelssohn — versão mais alegre e festiva</div>
+          </div>
+          <span class="piece-tag">Saída</span>
+          <div class="piece-links">
+            <a class="plink" href="https://imslp.org/wiki/A_Midsummer_Night%27s_Dream,_Op.61_(Mendelssohn,_Felix)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=wedding+march+mendelssohn+guitar+saida" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+
+        <li class="piece-item">
+          <div>
+            <div class="piece-name">Ode to Joy — Hino à Alegria</div>
+            <div class="piece-composer">Ludwig van Beethoven — triunfal e otimista</div>
+          </div>
+          <span class="piece-tag">Triunfal</span>
+          <div class="piece-links">
+            <a class="plink" href="https://imslp.org/wiki/Symphony_No.9,_Op.125_(Beethoven,_Ludwig_van)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=ode+to+joy+beethoven+guitar" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+
+        <li class="piece-item">
+          <div>
+            <div class="piece-name">Prince of Denmark's March — Trumpet Voluntary</div>
+            <div class="piece-composer">Jeremiah Clarke — cerimoniosa e alegre no violão</div>
+          </div>
+          <span class="piece-tag">Saída</span>
+          <div class="piece-links">
+            <a class="plink" href="https://imslp.org/wiki/Prince_of_Denmark%27s_March_(Clarke,_Jeremiah)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=trumpet+voluntary+clarke+guitar" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+
+    <!-- Romântico -->
+    <div class="moment-section">
+      <div class="moment-header">
+        <div class="moment-icon">🌹</div>
+        <h3>Peças Românticas · Interlúdio · Fundo Ambiente</h3>
+      </div>
+      <ul class="pieces-list">
+
+        <li class="piece-item">
+          <div>
+            <div class="piece-name">Romance de Amor (Romanza)</div>
+            <div class="piece-composer">Anônimo espanhol — clássico romântico, fácil e lindo</div>
+          </div>
+          <span class="piece-tag">Romântica</span>
+          <div class="piece-links">
+            <a class="plink" href="https://imslp.org/wiki/Romance_(Anonymous)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=romance+de+amor+violao" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+
+        <li class="piece-item">
+          <div>
+            <div class="piece-name">Cavatina</div>
+            <div class="piece-composer">Stanley Myers · do filme O Caçador de Corças — emotiva e cinematográfica</div>
+          </div>
+          <span class="piece-tag">Cinematográfica</span>
+          <div class="piece-links">
+            <a class="plink" href="https://musescore.com/search?text=cavatina+stanley+myers+guitar" target="_blank" rel="noopener">MuseScore</a>
+            <a class="plink" href="https://www.youtube.com/results?search_query=cavatina+stanley+myers+violao+classico" target="_blank" rel="noopener">YouTube</a>
+          </div>
+        </li>
+
+        <li class="piece-item">
+          <div>
+            <div class="piece-name">Lágrima</div>
+            <div class="piece-composer">Francisco Tárrega — curta, doce e muito tocada em eventos</div>
+          </div>
+          <span class="piece-tag">Delicada</span>
+          <div class="piece-links">
+            <a class="plink" href="https://imslp.org/wiki/L%C3%A1grima_(T%C3%A1rrega,_Francisco)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=lagrima+tarrega+guitar" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+
+        <li class="piece-item">
+          <div>
+            <div class="piece-name">Recuerdos de la Alhambra</div>
+            <div class="piece-composer">Francisco Tárrega — tremolo lindo, atmosfera mágica · nível intermediário/avançado</div>
+          </div>
+          <span class="piece-tag">Avançada</span>
+          <div class="piece-links">
+            <a class="plink" href="https://imslp.org/wiki/Recuerdos_de_la_Alhambra_(T%C3%A1rrega,_Francisco)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=recuerdos+alhambra+tarrega" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+
+        <li class="piece-item">
+          <div>
+            <div class="piece-name">Prelúdio — Cello Suite No. 1 (BWV 1007)</div>
+            <div class="piece-composer">J.S. Bach — icônica, versátil, muito usada em casamentos modernos</div>
+          </div>
+          <span class="piece-tag">Icônica</span>
+          <div class="piece-links">
+            <a class="plink" href="https://imslp.org/wiki/Cello_Suite_No.1_in_G_major,_BWV_1007_(Bach,_Johann_Sebastian)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=bach+cello+suite+1+prelude+guitar" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+
+        <li class="piece-item">
+          <div>
+            <div class="piece-name">Clair de Lune</div>
+            <div class="piece-composer">Claude Debussy — toque impressionista, arranjo para violão</div>
+          </div>
+          <span class="piece-tag">Impressionista</span>
+          <div class="piece-links">
+            <a class="plink" href="https://imslp.org/wiki/Suite_bergamasque_(Debussy,_Claude)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=clair+de+lune+debussy+guitar" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </div><!-- /tab-casamento -->
+
+  <!-- ═══ ABA 2: CÍVICO ═══ -->
+  <div class="tab-panel" id="tab-civico">
+    <p class="section-intro">Peças patrióticas, solenes e triunfais para hasteamentos, formaturas e atos oficiais. O Hino Nacional é essencial em qualquer solenidade.</p>
+
+    <div class="info-box">
+      <p>💡 <strong>Hino Nacional:</strong> Use arranjo lento e solene na entrada/hasteamento; versão mais dinâmica na saída.</p>
+      <p>Combine com hinos estaduais ou municipais se for evento local — ex: Hino de Minas Gerais arranjado para violão.</p>
+    </div>
+
+    <div class="civico-card">
+
+      <div class="civico-item">
+        <div class="civico-left">
+          <strong>Hino Nacional Brasileiro</strong>
+          <span>Francisco Manuel da Silva — arranjos clássicos para violão solo</span>
+          <div class="ci-links">
+            <a class="plink" href="https://imslp.org/wiki/Brazilian_National_Anthem_(Silva,_Francisco_Manuel_da)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=hino+nacional+brasileiro+violao" target="_blank" rel="noopener">MuseScore</a>
+            <a class="plink" href="https://www.youtube.com/@EdsonLopesViolao" target="_blank" rel="noopener">Edson Lopes</a>
+            <a class="plink" href="https://www.youtube.com/@MarcosKaiser" target="_blank" rel="noopener">Marcos Kaiser</a>
+            <a class="plink" href="https://www.youtube.com/@FabioLimaViolao" target="_blank" rel="noopener">Fabio Lima</a>
+            <a class="plink" href="https://www.youtube.com/results?search_query=yamandu+costa+hino+nacional" target="_blank" rel="noopener">Yamandu Costa</a>
+          </div>
+        </div>
+        <span class="civico-badge">Essencial</span>
+      </div>
+
+      <div class="civico-item">
+        <div class="civico-left">
+          <strong>Ode to Joy — Hino à Alegria</strong>
+          <span>Ludwig van Beethoven — triunfal, ótima para encerramento ou juramento</span>
+          <div class="ci-links">
+            <a class="plink" href="https://imslp.org/wiki/Symphony_No.9,_Op.125_(Beethoven,_Ludwig_van)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=ode+to+joy+beethoven+violao" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </div>
+        <span class="civico-badge">Encerramento</span>
+      </div>
+
+      <div class="civico-item">
+        <div class="civico-left">
+          <strong>Marcha Turca — Rondo alla Turca</strong>
+          <span>W.A. Mozart — alegre e cerimoniosa, usada em eventos oficiais</span>
+          <div class="ci-links">
+            <a class="plink" href="https://imslp.org/wiki/Piano_Sonata_No.11_in_A_major,_K.331/300i_(Mozart,_Wolfgang_Amadeus)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=marcha+turca+mozart+violao" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </div>
+        <span class="civico-badge">Oficial</span>
+      </div>
+
+      <div class="civico-item">
+        <div class="civico-left">
+          <strong>Pomp and Circumstance March No. 1</strong>
+          <span>Edward Elgar — clássico de formaturas, adaptado para colações de grau no Brasil</span>
+          <div class="ci-links">
+            <a class="plink" href="https://imslp.org/wiki/Pomp_and_Circumstance_Marches,_Op.39_(Elgar,_Edward)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=pomp+circumstance+elgar+guitar" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </div>
+        <span class="civico-badge">Formatura</span>
+      </div>
+
+      <div class="civico-item">
+        <div class="civico-left">
+          <strong>Marcha Radetzky</strong>
+          <span>Johann Strauss II — festiva e triunfal, para saídas ou aplausos</span>
+          <div class="ci-links">
+            <a class="plink" href="https://imslp.org/wiki/Radetzky_March,_Op.228_(Strauss_Sr.,_Johann)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=marcha+radetzky+violao" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </div>
+        <span class="civico-badge">Saída · Aplausos</span>
+      </div>
+
+      <div class="civico-item">
+        <div class="civico-left">
+          <strong>Brasileirinho</strong>
+          <span>Waldir Azevedo — choro clássico, patriótico e animado para recepção pós-cerimônia</span>
+          <div class="ci-links">
+            <a class="plink" href="https://musescore.com/search?text=brasileirinho+waldir+azevedo+violao" target="_blank" rel="noopener">MuseScore</a>
+            <a class="plink" href="https://www.youtube.com/results?search_query=brasileirinho+waldir+azevedo+violao+classico" target="_blank" rel="noopener">YouTube</a>
+          </div>
+        </div>
+        <span class="civico-badge">Pós-cerimônia</span>
+      </div>
+
+      <div class="civico-item">
+        <div class="civico-left">
+          <strong>Aquarela do Brasil</strong>
+          <span>Ary Barroso — arranjo clássico para violão, emotivo e nacional</span>
+          <div class="ci-links">
+            <a class="plink" href="https://musescore.com/search?text=aquarela+do+brasil+ary+barroso+violao" target="_blank" rel="noopener">MuseScore</a>
+            <a class="plink" href="https://www.youtube.com/results?search_query=aquarela+do+brasil+violao+classico" target="_blank" rel="noopener">YouTube</a>
+          </div>
+        </div>
+        <span class="civico-badge">Nacional</span>
+      </div>
+
+    </div>
+
+    <div class="arr-label">Versões recomendadas do Hino Nacional</div>
+    <div class="pills-wrap">
+      <a class="pill" href="https://www.youtube.com/@EdsonLopesViolao" target="_blank" rel="noopener" style="text-decoration:none">Edson Lopes — erudito</a>
+      <a class="pill" href="https://www.youtube.com/@MarcosKaiser" target="_blank" rel="noopener" style="text-decoration:none">Marcos Kaiser — fingerstyle clássico</a>
+      <a class="pill" href="https://www.youtube.com/@FabioLimaViolao" target="_blank" rel="noopener" style="text-decoration:none">Fabio Lima — tutorial completo</a>
+      <a class="pill" href="https://www.youtube.com/results?search_query=yamandu+costa+hino+nacional+violao" target="_blank" rel="noopener" style="text-decoration:none">Yamandu Costa — moderno-clássico</a>
+      <a class="pill" href="https://www.youtube.com/results?search_query=atilio+bernardini+hino+nacional+violao" target="_blank" rel="noopener" style="text-decoration:none">Atilio Bernardini</a>
+    </div>
+  </div><!-- /tab-civico -->
+
+  <!-- ═══ ABA 3: NÍVEL ═══ -->
+  <div class="tab-panel" id="tab-nivel">
+    <p class="section-intro">Escolha o repertório conforme seu nível técnico. Dicas do guia do Instituto Urbano Rocha, com links diretos para cada peça.</p>
+
+    <div class="level-grid">
+      <div class="level-card">
+        <div class="level-badge">♩ Iniciante / Intermediário</div>
+        <ul>
+          <li>
+            <strong>Canon in D</strong> — Pachelbel
+            <div class="li-links">
+              <a class="plink" href="https://imslp.org/wiki/Canon_and_Gigue_in_D_major_(Pachelbel,_Johann)" target="_blank" rel="noopener">IMSLP</a>
+              <a class="plink" href="https://musescore.com/search?text=canon+in+d+pachelbel+guitar" target="_blank" rel="noopener">MuseScore</a>
+            </div>
+          </li>
+          <li>
+            <strong>Ave Maria</strong> — Schubert
+            <div class="li-links">
+              <a class="plink" href="https://imslp.org/wiki/Ave_Maria,_D.839_(Schubert,_Franz)" target="_blank" rel="noopener">IMSLP</a>
+              <a class="plink" href="https://musescore.com/search?text=ave+maria+schubert+violao" target="_blank" rel="noopener">MuseScore</a>
+            </div>
+          </li>
+          <li>
+            <strong>Jesu, Joy of Man's Desiring</strong> — Bach
+            <div class="li-links">
+              <a class="plink" href="https://imslp.org/wiki/Herz_und_Mund_und_Tat_und_Leben,_BWV_147_(Bach,_Johann_Sebastian)" target="_blank" rel="noopener">IMSLP</a>
+              <a class="plink" href="https://musescore.com/search?text=jesu+joy+bach+guitar" target="_blank" rel="noopener">MuseScore</a>
+            </div>
+          </li>
+          <li>
+            <strong>Lágrima</strong> — Tárrega
+            <div class="li-links">
+              <a class="plink" href="https://imslp.org/wiki/L%C3%A1grima_(T%C3%A1rrega,_Francisco)" target="_blank" rel="noopener">IMSLP</a>
+              <a class="plink" href="https://musescore.com/search?text=lagrima+tarrega+guitar" target="_blank" rel="noopener">MuseScore</a>
+            </div>
+          </li>
+          <li>
+            <strong>Minueto em G</strong> — Bach
+            <div class="li-links">
+              <a class="plink" href="https://imslp.org/wiki/Minuet_in_G_major,_BWV_Anh.114_(Bach,_Johann_Sebastian)" target="_blank" rel="noopener">IMSLP</a>
+              <a class="plink" href="https://musescore.com/search?text=minuet+g+bach+guitar" target="_blank" rel="noopener">MuseScore</a>
+            </div>
+          </li>
+          <li>
+            <strong>Hino Nacional</strong> (versão simplificada)
+            <div class="li-links">
+              <a class="plink" href="https://imslp.org/wiki/Brazilian_National_Anthem_(Silva,_Francisco_Manuel_da)" target="_blank" rel="noopener">IMSLP</a>
+              <a class="plink" href="https://www.youtube.com/@FabioLimaViolao" target="_blank" rel="noopener">Fabio Lima</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="level-card">
+        <div class="level-badge">♩♩ Intermediário / Avançado</div>
+        <ul>
+          <li>
+            <strong>Recuerdos de la Alhambra</strong> — Tárrega
+            <div class="li-links">
+              <a class="plink" href="https://imslp.org/wiki/Recuerdos_de_la_Alhambra_(T%C3%A1rrega,_Francisco)" target="_blank" rel="noopener">IMSLP</a>
+              <a class="plink" href="https://musescore.com/search?text=recuerdos+alhambra+tarrega" target="_blank" rel="noopener">MuseScore</a>
+            </div>
+          </li>
+          <li>
+            <strong>Prelúdio BWV 1007</strong> — Bach
+            <div class="li-links">
+              <a class="plink" href="https://imslp.org/wiki/Cello_Suite_No.1_in_G_major,_BWV_1007_(Bach,_Johann_Sebastian)" target="_blank" rel="noopener">IMSLP</a>
+              <a class="plink" href="https://musescore.com/search?text=bach+cello+suite+1+prelude+guitar" target="_blank" rel="noopener">MuseScore</a>
+            </div>
+          </li>
+          <li>
+            <strong>Astúrias (Leyenda)</strong> — Albéniz
+            <div class="li-links">
+              <a class="plink" href="https://imslp.org/wiki/Espa%C3%B1a,_Op.165_(Alb%C3%A9niz,_Isaac)" target="_blank" rel="noopener">IMSLP</a>
+              <a class="plink" href="https://musescore.com/search?text=asturias+leyenda+albeniz+guitar" target="_blank" rel="noopener">MuseScore</a>
+            </div>
+          </li>
+          <li>
+            <strong>Hino Nacional</strong> — harmonias completas
+            <div class="li-links">
+              <a class="plink" href="https://www.youtube.com/@EdsonLopesViolao" target="_blank" rel="noopener">Edson Lopes</a>
+              <a class="plink" href="https://www.youtube.com/@MarcosKaiser" target="_blank" rel="noopener">Marcos Kaiser</a>
+            </div>
+          </li>
+          <li>
+            <strong>Marcha Radetzky</strong> — Strauss II
+            <div class="li-links">
+              <a class="plink" href="https://imslp.org/wiki/Radetzky_March,_Op.228_(Strauss_Sr.,_Johann)" target="_blank" rel="noopener">IMSLP</a>
+              <a class="plink" href="https://musescore.com/search?text=marcha+radetzky+violao" target="_blank" rel="noopener">MuseScore</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="level-card" style="margin-top:14px;background:var(--teal-bg);border-color:var(--teal-pale)">
+      <div class="level-badge">🎓 Formaturas — peças mais alegres</div>
+      <ul>
+        <li>
+          <strong>Ode to Joy</strong> — Beethoven
+          <div class="li-links">
+            <a class="plink" href="https://imslp.org/wiki/Symphony_No.9,_Op.125_(Beethoven,_Ludwig_van)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=ode+to+joy+beethoven+violao" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+        <li>
+          <strong>Pavane</strong> — Gabriel Fauré
+          <div class="li-links">
+            <a class="plink" href="https://imslp.org/wiki/Pavane,_Op.50_(Faur%C3%A9,_Gabriel)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=pavane+faure+guitar" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+        <li>
+          <strong>Gavotte</strong> — J.S. Bach
+          <div class="li-links">
+            <a class="plink" href="https://imslp.org/wiki/Gavotte_in_D_major,_BWV_Anh.122_(Bach,_Johann_Sebastian)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=gavotte+bach+guitar" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+        <li>
+          <strong>Eine Kleine Nachtmusik</strong> — W.A. Mozart
+          <div class="li-links">
+            <a class="plink" href="https://imslp.org/wiki/Eine_kleine_Nachtmusik,_K.525_(Mozart,_Wolfgang_Amadeus)" target="_blank" rel="noopener">IMSLP</a>
+            <a class="plink" href="https://musescore.com/search?text=eine+kleine+nachtmusik+mozart+guitar" target="_blank" rel="noopener">MuseScore</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div><!-- /tab-nivel -->
+
+  <!-- ═══ ABA 4: PARTITURAS ═══ -->
+  <div class="tab-panel" id="tab-recursos">
+    <p class="section-intro">Fontes indicadas no guia do Instituto Urbano Rocha — todas gratuitas — para partituras, tabs e tutoriais em vídeo.</p>
+
+    <div class="recursos-grid">
+      <div class="recurso-card">
+        <div class="recurso-icon">📄</div>
+        <h4>IMSLP</h4>
+        <p>Maior biblioteca de domínio público. Hino Nacional, Bach, Handel, Beethoven, Tárrega, Debussy e centenas de obras para violão.</p>
+        <a href="https://imslp.org" target="_blank" rel="noopener" class="recurso-link">imslp.org →</a>
+      </div>
+      <div class="recurso-card">
+        <div class="recurso-icon">🎵</div>
+        <h4>MuseScore</h4>
+        <p>Plataforma colaborativa com arranjos para violão solo, incluindo Hino Nacional e obras clássicas adaptadas com tab interativa.</p>
+        <a href="https://musescore.com" target="_blank" rel="noopener" class="recurso-link">musescore.com →</a>
+      </div>
+      <div class="recurso-card">
+        <div class="recurso-icon">▶️</div>
+        <h4>Fabio Lima</h4>
+        <p>Tutorial completo do Hino Nacional com tab e partitura. Referência principal indicada no guia para iniciantes e intermediários.</p>
+        <a href="https://www.youtube.com/@FabioLimaViolao" target="_blank" rel="noopener" class="recurso-link">YouTube →</a>
+      </div>
+      <div class="recurso-card">
+        <div class="recurso-icon">▶️</div>
+        <h4>Marcos Kaiser</h4>
+        <p>Fingerstyle clássico de alto nível. Versões refinadas do Hino Nacional e repertório para cerimônias com tab na descrição.</p>
+        <a href="https://www.youtube.com/@MarcosKaiser" target="_blank" rel="noopener" class="recurso-link">YouTube →</a>
+      </div>
+      <div class="recurso-card">
+        <div class="recurso-icon">▶️</div>
+        <h4>Edson Lopes</h4>
+        <p>Arranjos eruditos de referência para violão clássico brasileiro. Versão do Hino com harmonias ricas, nível intermediário/avançado.</p>
+        <a href="https://www.youtube.com/@EdsonLopesViolao" target="_blank" rel="noopener" class="recurso-link">YouTube →</a>
+      </div>
+      <div class="recurso-card">
+        <div class="recurso-icon">▶️</div>
+        <h4>Yamandu Costa</h4>
+        <p>Interpretações moderno-clássicas que mesclam tradição erudita e brasilidade. Versão moderna do Hino Nacional indicada no guia.</p>
+        <a href="https://www.youtube.com/results?search_query=yamandu+costa+hino+nacional+violao" target="_blank" rel="noopener" class="recurso-link">YouTube →</a>
+      </div>
+    </div>
+
+    <div class="dica-box">
+      <h4>💡 Dicas para encontrar as partituras</h4>
+      <ul>
+        <li>No IMSLP, busque pelo compositor + título — obras do séc. XIX e anteriores estão em domínio público</li>
+        <li>No MuseScore, filtre por "violão" ou "guitar" para achar arranjos específicos para o instrumento</li>
+        <li>Os tutoriais do Fabio Lima e Marcos Kaiser geralmente incluem link da partitura ou tab na descrição do vídeo</li>
+        <li>Para o Hino Nacional: procure transcrições em MuseScore, IMSLP ou YouTube (Edson Lopes, Marcos Kaiser)</li>
+        <li>Use arranjo lento/solene na entrada e hasteamento; versão mais dinâmica na saída</li>
+      </ul>
+    </div>
+  </div><!-- /tab-recursos -->
+
+</div><!-- /tabs-container -->
+
+<footer>
+  <span>Instituto Urbano Rocha</span> · U.T.I. da Música · Violão Clássico
+</footer>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  const map = {casamento:0, civico:1, nivel:2, recursos:3};
+  document.querySelectorAll('.tab-btn')[map[id]].classList.add('active');
+}
+</script>
+</body>
+</html>
